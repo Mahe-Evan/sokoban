@@ -9,14 +9,17 @@
 #include "my.h"
 #include <stdlib.h>
 #include "my_struct.h"
+#include <stddef.h>
 
 static int reset_array(char **array, char **second_array)
 {
+    clear();
     for (int i = 0; array[i] != NULL; i += 1) {
         for (int j = 0; j != my_strlen(array[i]); j += 1) {
             array[i][j] = second_array[i][j];
         }
     }
+    refresh();
     return 0;
 }
 
@@ -26,16 +29,16 @@ static int my_move(int a, char **array, char **second_array,
     if (a == 27) {
         return 0;
     }
-    if (a == KEY_UP && coordinates->player_x - 1 >= 0) {
+    if (a == KEY_UP) {
         check_up(coordinates, array);
     }
-    if (a == KEY_DOWN && coordinates->player_x + 1 <= 30) {
+    if (a == KEY_DOWN) {
         check_down(coordinates, array);
     }
-    if (a == KEY_RIGHT && coordinates->player_y + 1 <= 30) {
+    if (a == KEY_RIGHT) {
         check_right(coordinates, array);
     }
-    if (a == KEY_LEFT && coordinates->player_y - 1 >= 0) {
+    if (a == KEY_LEFT) {
         check_left(coordinates, array);
     }
     if (a == 32) {
@@ -67,14 +70,35 @@ static void free_array(char **array, char **second_array, int nb_rows)
     return;
 }
 
+void check_P(char **array, base_t *coordinates, int i, int j)
+{
+    if (array[i][j] == 'P') {
+        coordinates->player_base_x = i;
+        coordinates->player_x = i;
+        coordinates->player_base_y = j;
+        coordinates->player_y = j;
+    }
+    return;
+}
+
+void check_player(char **array, base_t *coordinates)
+{
+    for (int i = 0; array[i] != NULL; i += 1) {
+        for (int j = 0; j != my_strlen(array[i]); j += 1) {
+            check_P(array, coordinates, i, j);
+        }
+    }
+    return;
+}
+
 int window(char **array, char **second_array, int nb_rows)
 {
-    base_t coordinates = {.player_base_x = 15, .player_base_y = 15,
-    .player_x = 15, .player_y = 15};
+    base_t coordinates;
     WINDOW *win;
     int nb = 1;
     int a = 0;
     
+    check_player(array, &coordinates);
     initscr();
     keypad(stdscr, TRUE);
     while (nb == 1) {
