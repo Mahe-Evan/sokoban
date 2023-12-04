@@ -8,8 +8,8 @@
 #ifndef MY_H_
     #define MY_H_
 
-#include <sys/stat.h>
-#include "my_struct.h"
+    #include <sys/stat.h>
+    #include "my_struct.h"
 
 void my_putchar(char c);
 void my_array_swap(char *a, char *b);
@@ -50,6 +50,5 @@ void check_up(base_t *coordinates, char **array);
 void check_right(base_t *coordinates, char **array);
 void check_left(base_t *coordinates, char **array);
 void check_player_base(char **array, base_t *coordinates);
-void check_player(char **array, base_t *coordinates);
 
 #endif /*MY_H_*/

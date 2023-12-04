@@ -56,7 +56,6 @@ static int reset_and_close(int a, char **array, char **second_array,
         free_first_array(array, second_array);
     }
     return 1;
-
 }
 
 static int my_move(int a, char **array, char **second_array,
@@ -83,8 +82,12 @@ static void print_window(base_t *coordinates, char **array)
     for (int i = 0; array[i] != NULL; i += 1) {
         printw(array[i]);
     }
-    printw("%d\n", coordinates->player_x);
-    printw("%d\n", coordinates->player_y);
+    printw("x = %d\n", coordinates->player_x);
+    printw("y = %d\n", coordinates->player_y);
+    printw("x + 1 = %d\n", coordinates->player_x + 1);
+    printw("y + 1 = %d\n", coordinates->player_y + 1);
+    printw("x - 1 = %d\n", coordinates->player_x - 1);
+    printw("y - 1 = %d\n", coordinates->player_y - 1);
     refresh();
     return;
 }
@@ -104,11 +107,11 @@ static void free_array(char **array, char **second_array, int nb_rows)
 
 int window(char **array, char **second_array, int nb_rows)
 {
-    base_t coordinates;
+    base_t coordinates = {.obj = ' '};
     WINDOW *win;
     int nb = 1;
     int a = 0;
-    
+
     check_player_base(array, &coordinates);
     initscr();
     set_escdelay(0);

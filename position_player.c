@@ -9,7 +9,7 @@
 #include <stddef.h>
 #include "my.h"
 
-static void check_P_base(char **array, base_t *coordinates, int i, int j)
+static void check_play_base(char **array, base_t *coordinates, int i, int j)
 {
     if (array[i][j] == 'P') {
         coordinates->player_base_x = i;
@@ -24,7 +24,7 @@ void check_player_base(char **array, base_t *coordinates)
 {
     for (int i = 0; array[i] != NULL; i += 1) {
         for (int j = 0; j < my_strlen(array[i]); j += 1) {
-            check_P_base(array, coordinates, i, j);
+            check_play_base(array, coordinates, i, j);
         }
     }
     return;

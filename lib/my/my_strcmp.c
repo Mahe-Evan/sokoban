@@ -31,7 +31,6 @@ int my_strcmp(char const *s1, char const *s2)
     while (s1[i] != '\0' && s1[i] != '"') {
         totals1 += s1[i];
         i += 1;
-        
     }
     while (s2[j] != '\0' && s2[j] != '"') {
         totals2 += s2[j];

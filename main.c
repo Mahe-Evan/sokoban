@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     }
     filepath = argv[1];
     if (stat(filepath, &head_stat) != -1) {
-        return load_file_array(filepath, &head_stat);   
+        return load_file_array(filepath, &head_stat);
     }
     return write(2, "84\n", 3);
 }
