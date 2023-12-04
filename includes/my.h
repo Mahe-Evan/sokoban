@@ -49,5 +49,7 @@ void check_down(base_t *coordinates, char **array);
 void check_up(base_t *coordinates, char **array);
 void check_right(base_t *coordinates, char **array);
 void check_left(base_t *coordinates, char **array);
+void check_player_base(char **array, base_t *coordinates);
+void check_player(char **array, base_t *coordinates);
 
 #endif /*MY_H_*/

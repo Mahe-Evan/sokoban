@@ -1,6 +1,6 @@
 ##
 ## EPITECH PROJECT, 2023
-## my_ls
+## my_sokoban
 ## File description:
 ## Makefile for my_printf
 ##
@@ -10,7 +10,8 @@ PROJECT_NAME	=	my_sokoban
 SRC		=	fenetre.c	\
 			main.c		\
 			check_map.c	\
-			check_move.c
+			check_move.c	\
+			position_player.c
 
 COMP	=	gcc
 

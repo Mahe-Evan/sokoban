@@ -31,7 +31,7 @@ void check_left(base_t *coordinates, char **array)
     if (array[coordinates->player_x][coordinates->player_y - 1] != '#') {
         array[coordinates->player_x][coordinates->player_y - 1] =
         array[coordinates->player_x][coordinates->player_y];
-        array[coordinates->player_x][coordinates->player_y - 1] =
+        array[coordinates->player_x][coordinates->player_y] =
         char_switch;
         coordinates->player_y -= 1;
     }
