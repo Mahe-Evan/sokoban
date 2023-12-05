@@ -83,15 +83,6 @@ static void print_window(base_t *coordinates, char **array, nb_t *number,
     for (int i = 0; array[i] != NULL; i += 1) {
         printw(array[i]);
     }
-    printw("x = %d\n", coordinates->player_x);
-    printw("y = %d\n", coordinates->player_y);
-    printw("x + 1 = %d\n", coordinates->player_x + 1);
-    printw("y + 1 = %d\n", coordinates->player_y + 1);
-    printw("x - 1 = %d\n", coordinates->player_x - 1);
-    printw("y - 1 = %d\n", coordinates->player_y - 1);
-    printw("storage = %d\n", number->storage);
-    printw("good_storage = %d\n", number->good_storage);
-    printw("nb = %d\n", nb);
     refresh();
     return;
 }

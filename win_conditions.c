@@ -9,6 +9,7 @@
 #include "my_struct.h"
 #include <stddef.h>
 #include <ncurses.h>
+#include <unistd.h>
 
 static void check_o(char **array, char **second_array, int i, int j)
 {
@@ -45,8 +46,8 @@ int check_win(int nb, nb_t *number, char **array, char **second_array)
             printw(array[i]);
         }
         refresh();
-        nb = 1;
-        return nb;
+        usleep(100000);
+        return 0;
     } else {
         number->good_storage = 0;
         return 2;
