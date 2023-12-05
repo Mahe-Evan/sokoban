@@ -12,7 +12,7 @@
 #include <stddef.h>
 
 
-static int reset_array(char **second_array, int nb_rows)
+static void reset_array(char **second_array, int nb_rows)
 {
     char **array = malloc(sizeof(char *) * (nb_rows + 1));
     char *nb;
@@ -28,34 +28,20 @@ static int reset_array(char **second_array, int nb_rows)
         }
     }
     refresh();
-    return 0;
-}
-
-static void free_first_array(char **array, char **second_array)
-{
-    int nb_rows = 0;
-
-    for (int j = 0; second_array[j] != NULL; j += 1) {
-        free(array[j]);
-        nb_rows += 1;
-    }
-    free(array);
-    reset_array(second_array, nb_rows);
     return;
 }
 
-static int reset_and_close(int a, char **array, char **second_array,
-    base_t *coordinates)
+static void free_array(char **array, char **second_array)
 {
-    if (a == 27) {
-        return 0;
+    for (int j = 0; array[j] != NULL; j += 1) {
+        free(array[j]);
     }
-    if (a == 32) {
-        coordinates->player_x = coordinates->player_base_x;
-        coordinates->player_y = coordinates->player_base_y;
-        free_first_array(array, second_array);
+    free(array);
+    for (int j = 0; second_array[j] != NULL; j += 1) {
+        free(second_array[j]);
     }
-    return 1;
+    free(second_array);
+    return;
 }
 
 static int my_move(int a, char **array, char **second_array,
@@ -73,10 +59,25 @@ static int my_move(int a, char **array, char **second_array,
     if (a == KEY_LEFT) {
         check_left(coordinates, array);
     }
-    return 1;
+    return 2;
 }
 
-static void print_window(base_t *coordinates, char **array)
+static int reset_and_close(int a, char **array, char **second_array,
+    base_t *coordinates)
+{
+    if (a == 27) {
+        return 0;
+    }
+    if (a == 32) {
+        coordinates->player_x = coordinates->player_base_x;
+        coordinates->player_y = coordinates->player_base_y;
+    }
+    my_move(a, array, second_array, coordinates);
+    return 2;
+}
+
+static void print_window(base_t *coordinates, char **array, nb_t *number,
+    int nb)
 {
     clear();
     for (int i = 0; array[i] != NULL; i += 1) {
@@ -88,42 +89,31 @@ static void print_window(base_t *coordinates, char **array)
     printw("y + 1 = %d\n", coordinates->player_y + 1);
     printw("x - 1 = %d\n", coordinates->player_x - 1);
     printw("y - 1 = %d\n", coordinates->player_y - 1);
+    printw("storage = %d\n", number->storage);
+    printw("good_storage = %d\n", number->good_storage);
+    printw("nb = %d\n", nb);
     refresh();
     return;
 }
 
-static void free_array(char **array, char **second_array, int nb_rows)
-{
-    for (int j = 0; j < nb_rows; j += 1) {
-        free(array[j]);
-    }
-    free(array);
-    for (int j = 0; j < nb_rows; j += 1) {
-        free(second_array[j]);
-    }
-    free(second_array);
-    return;
-}
-
-int window(char **array, char **second_array, int nb_rows)
+int window(char **array, char **second_array, int nb_rows, nb_t *number)
 {
     base_t coordinates = {.obj = ' '};
-    WINDOW *win;
-    int nb = 1;
+    int nb = 2;
     int a = 0;
 
     check_player_base(array, &coordinates);
     initscr();
     set_escdelay(0);
     keypad(stdscr, TRUE);
-    while (nb == 1) {
-        print_window(&coordinates, array);
+    while (nb == 2) {
+        print_window(&coordinates, array, number, nb);
         a = getch();
         nb = reset_and_close(a, array, second_array, &coordinates);
-        my_move(a, array, second_array, &coordinates);
+        if (nb == 2)
+            nb = check_win(nb, number, array, second_array);
     }
-    free_array(array, second_array, nb_rows);
+    free_array(array, second_array);
     endwin();
-    free(win);
-    return 0;
+    return nb;
 }

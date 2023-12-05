@@ -21,6 +21,7 @@ typedef struct nb_error {
     int storage;
     int box;
     int player;
+    int good_storage;
 } nb_t;
 
 #endif /* !MY_STRUCT_H_ */

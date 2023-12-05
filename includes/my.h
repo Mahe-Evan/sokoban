@@ -43,12 +43,13 @@ int my_showstr(char const *str);
 int my_showmem(char const *str, int size);
 char *my_strcat(char *dest, char const *src);
 char *my_strncat(char *dest, char const *src, int nb);
-int window(char **array, char **second_array, int nb_rows);
+int window(char **array, char **second_array, int nb_rows, nb_t *number);
 int load_file_array(char const *filepath, struct stat *head_stat);
 void check_down(base_t *coordinates, char **array);
 void check_up(base_t *coordinates, char **array);
 void check_right(base_t *coordinates, char **array);
 void check_left(base_t *coordinates, char **array);
 void check_player_base(char **array, base_t *coordinates);
+int check_win(int nb, nb_t *number, char **array, char **second_array);
 
 #endif /*MY_H_*/

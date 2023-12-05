@@ -14,7 +14,7 @@
 #include <stddef.h>
 #include "my_struct.h"
 
-static int second_array(char **array, int nb_rows, int nb_cols)
+static int second_array(char **array, int nb_rows, int nb_cols, nb_t *number)
 {
     char **second_array = malloc(sizeof(char *) * (nb_rows + 1));
     char *nb;
@@ -28,7 +28,7 @@ static int second_array(char **array, int nb_rows, int nb_cols)
             second_array[i][j] = array[i][j];
         }
     }
-    return window(array, second_array, nb_rows);
+    return window(array, second_array, nb_rows, number);
 }
 
 static int check_car(char **array, int i, int j)
@@ -54,16 +54,14 @@ static void count_nb(char **array, int i, int j, nb_t *number)
     return;
 }
 
-static int check_number(char **array, int nb_rows, int nb_cols)
+static int check_number(char **array, int nb_rows, int nb_cols, nb_t *number)
 {
-    nb_t number = {.box = 0, .player = 0, .storage = 0};
-
     for (int i = 0; i < nb_rows; i += 1) {
         for (int j = 0; array[i][j] != '\n'; j += 1) {
-            count_nb(array, i, j, &number);
+            count_nb(array, i, j, number);
         }
     }
-    if (number.player != 1 || number.box != number.storage) {
+    if (number->player != 1 || number->box != number->storage) {
         write(2, "84\n", 3);
     }
     return 0;
@@ -71,6 +69,7 @@ static int check_number(char **array, int nb_rows, int nb_cols)
 
 static int check_array(char **array, int nb_rows, int nb_cols)
 {
+    nb_t number = {.box = 0, .player = 0, .storage = 0, .good_storage = 0};
     int error = 0;
     int i = 0;
 
@@ -79,12 +78,12 @@ static int check_array(char **array, int nb_rows, int nb_cols)
             error += check_car(array, i, j);
         }
     }
-    error = check_number(array, nb_rows, nb_cols);
+    error = check_number(array, nb_rows, nb_cols, &number);
     if (error != 0) {
         write(2, "84\n", 3);
         return 84;
     }
-    return second_array(array, nb_rows, nb_cols);
+    return second_array(array, nb_rows, nb_cols, &number);
 }
 
 static int set_array(int nb_rows, int nb_cols, char *buffer)

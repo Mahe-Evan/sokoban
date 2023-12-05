@@ -11,7 +11,8 @@ SRC		=	fenetre.c	\
 			main.c		\
 			check_map.c	\
 			check_move.c	\
-			position_player.c
+			position_player.c	\
+			win_conditions.c
 
 COMP	=	gcc
 
