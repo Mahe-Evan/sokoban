@@ -24,6 +24,8 @@ typedef struct nb_game {
     int good_storage;
     int lines;
     int cols;
+    int block_storage;
+    int nb_wall;
 } nb_t;
 
 #endif /* !MY_STRUCT_H_ */
