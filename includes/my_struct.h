@@ -17,11 +17,13 @@ typedef struct coordinates_base {
     char obj;
 } base_t;
 
-typedef struct nb_error {
+typedef struct nb_game {
     int storage;
     int box;
     int player;
     int good_storage;
+    int lines;
+    int cols;
 } nb_t;
 
 #endif /* !MY_STRUCT_H_ */

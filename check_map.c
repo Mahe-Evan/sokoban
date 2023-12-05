@@ -69,7 +69,8 @@ static int check_number(char **array, int nb_rows, int nb_cols, nb_t *number)
 
 static int check_array(char **array, int nb_rows, int nb_cols)
 {
-    nb_t number = {.box = 0, .player = 0, .storage = 0, .good_storage = 0};
+    nb_t number = {.box = 0, .player = 0, .storage = 0, .good_storage = 0,
+    .lines = nb_rows, .cols = nb_cols};
     int error = 0;
     int i = 0;
 
