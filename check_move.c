@@ -7,17 +7,20 @@
 
 #include "my.h"
 #include "my_struct.h"
+#include <stddef.h>
 
 static void check_o_rigth(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x][coordinates->player_y + 1] == ' ') {
+    if (array[coordinates->player_x][coordinates->player_y + 1] == ' '
+        && array[coordinates->player_x][coordinates->player_y + 2] != '\0') {
         array[coordinates->player_x][coordinates->player_y + 1] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
         coordinates->obj = ' ';
         coordinates->player_y += 1;
     } else if
-        (array[coordinates->player_x][coordinates->player_y + 1] == 'O') {
+        (array[coordinates->player_x][coordinates->player_y + 1] == 'O'
+        && array[coordinates->player_x][coordinates->player_y + 2] != '\0') {
         array[coordinates->player_x][coordinates->player_y + 1] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
@@ -29,7 +32,8 @@ static void check_o_rigth(base_t *coordinates, char **array)
 
 void check_right(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x][coordinates->player_y + 1] == 'X') {
+    if (array[coordinates->player_x][coordinates->player_y + 1] == 'X'
+        && array[coordinates->player_x][coordinates->player_y + 2] != '\0') {
         if (array[coordinates->player_x][coordinates->player_y + 2] == ' ' ||
             array[coordinates->player_x][coordinates->player_y + 2] == 'O') {
             array[coordinates->player_x][coordinates->player_y + 2] = 'X';
@@ -47,14 +51,16 @@ void check_right(base_t *coordinates, char **array)
 
 static void check_o_left(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x][coordinates->player_y - 1] == ' ') {
+    if (array[coordinates->player_x][coordinates->player_y - 1] == ' '
+        && coordinates->player_y - 1 != 0) {
         array[coordinates->player_x][coordinates->player_y - 1] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
         coordinates->obj = ' ';
         coordinates->player_y -= 1;
     } else if
-        (array[coordinates->player_x][coordinates->player_y - 1] == 'O') {
+        (array[coordinates->player_x][coordinates->player_y - 1] == 'O'
+        && coordinates->player_y - 1 != 0) {
         array[coordinates->player_x][coordinates->player_y - 1] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
@@ -66,7 +72,8 @@ static void check_o_left(base_t *coordinates, char **array)
 
 void check_left(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x][coordinates->player_y - 1] == 'X') {
+    if (array[coordinates->player_x][coordinates->player_y - 1] == 'X'
+        && coordinates->player_y - 1 != 0) {
         if (array[coordinates->player_x][coordinates->player_y - 2] == ' ' ||
             array[coordinates->player_x][coordinates->player_y - 2] == 'O') {
             array[coordinates->player_x][coordinates->player_y - 2] = 'X';
@@ -84,14 +91,16 @@ void check_left(base_t *coordinates, char **array)
 
 static void check_o_down(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x + 1][coordinates->player_y] == ' ') {
+    if (array[coordinates->player_x + 1][coordinates->player_y] == ' '
+        && array[coordinates->player_x + 3] != NULL) {
         array[coordinates->player_x + 1][coordinates->player_y] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
         coordinates->obj = ' ';
         coordinates->player_x += 1;
     } else if
-        (array[coordinates->player_x + 1][coordinates->player_y] == 'O') {
+        (array[coordinates->player_x + 1][coordinates->player_y] == 'O'
+        && array[coordinates->player_x + 3] != NULL) {
         array[coordinates->player_x + 1][coordinates->player_y] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
@@ -103,7 +112,8 @@ static void check_o_down(base_t *coordinates, char **array)
 
 void check_down(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x + 1][coordinates->player_y] == 'X') {
+    if (array[coordinates->player_x + 1][coordinates->player_y] == 'X'
+        && array[coordinates->player_x + 3] != NULL) {
         if (array[coordinates->player_x + 2][coordinates->player_y] == ' ' ||
             array[coordinates->player_x + 2][coordinates->player_y] == 'O') {
             array[coordinates->player_x + 2][coordinates->player_y] = 'X';
@@ -121,14 +131,16 @@ void check_down(base_t *coordinates, char **array)
 
 static void check_o_up(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x - 1][coordinates->player_y] == ' ') {
+    if (array[coordinates->player_x - 1][coordinates->player_y] == ' '
+        && coordinates->player_x - 1 != 0) {
         array[coordinates->player_x - 1][coordinates->player_y] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
         coordinates->obj = ' ';
         coordinates->player_x -= 1;
     } else if
-        (array[coordinates->player_x - 1][coordinates->player_y] == 'O') {
+        (array[coordinates->player_x - 1][coordinates->player_y] == 'O'
+        && coordinates->player_x - 1 != 0) {
         array[coordinates->player_x - 1][coordinates->player_y] =
         array[coordinates->player_x][coordinates->player_y];
         array[coordinates->player_x][coordinates->player_y] = coordinates->obj;
@@ -140,7 +152,8 @@ static void check_o_up(base_t *coordinates, char **array)
 
 void check_up(base_t *coordinates, char **array)
 {
-    if (array[coordinates->player_x - 1][coordinates->player_y] == 'X') {
+    if (array[coordinates->player_x - 1][coordinates->player_y] == 'X'
+        && coordinates->player_x - 1 != 0) {
         if (array[coordinates->player_x - 2][coordinates->player_y] == ' ' ||
             array[coordinates->player_x - 2][coordinates->player_y] == 'O') {
             array[coordinates->player_x - 2][coordinates->player_y] = 'X';
